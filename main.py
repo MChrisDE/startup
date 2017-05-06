@@ -86,12 +86,14 @@ def edit():
     for i in range(0, len(names)):
         linkobjectlist.append(Entrys(links[i], i + 1, main, 1))
 
-    style = ttk.Style()
-    style.configure("TButton", font=("Arial", 11))
-    save_button = ttk.Button(main, text="Change", style="TButton", command=lambda: saveChanges(main))
-    save_button.grid(row=0, column=1, padx=0, pady=25)
+    ttk.Style().configure("TButton", font=("Arial", 11))
 
-    add_button = ttk.Button(main, text="Add", style="TButton", command=lambda: add(main))
+    save_button = ttk.Button(main, text="Save", style="TButton", command=lambda: saveChanges(main))
+    save_button.bind("<Return>", lambda event: saveChanges(main))
+    save_button.grid(row=0, column=1, padx=0, pady=25)
+    save_button.focus_set()
+
+    add_button = ttk.Button(main, text="Add new entry", style="TButton", command=lambda: add(main))
     add_button.grid(row=0, column=0, padx=0, pady=25)
 
     main.mainloop()
