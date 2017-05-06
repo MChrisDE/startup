@@ -13,12 +13,8 @@ class Row:
         self.Button.grid(row=nummer, column=0, padx=70, pady=5)
 
     def openlink(self):
-        self.link = self.link.replace("https://", "")
-        self.link = self.link.replace("http://", "")
-        self.link = self.link.replace("www.", "")
-        webbrowser.open_new_tab("http://" + self.link)
-
-        print("open...")
+        webbrowser.open_new_tab(self.link)
+        print("opened \"{link}\" in your default browser".format(link=self.link))
 
 
 class Entrys:

@@ -15,12 +15,25 @@ def quiteverything(main):
     end = 1
 
 
+def handle_url(url) -> str:
+    """
+    Prevents Windows from defaulting to open some URLs in IE 
+    by adding a default url scheme to the input string
+    if URL doesn't contain a scheme
+    :param url: url from link text input
+    :return: 'url' prefixed with default protocol or unchanged parameter 'url'
+    """
+    if "https://" not in url[:8] and "http://" not in url[:7]:
+        url = "http://" + url
+    return url
+
+
 def saveChanges(main):
     text = ""
     global file_path, flow, nameobjectlist, linkobjectlist
     for i in range(0, len(nameobjectlist)):
         if nameobjectlist[i].text.get() != '' and linkobjectlist[i].text.get() != '':
-            text += nameobjectlist[i].text.get() + "~" + linkobjectlist[i].text.get() + "\n"
+            text += nameobjectlist[i].text.get() + "~" + handle_url(linkobjectlist[i].text.get()) + "\n"
 
     f = open(file_path, "w")
     f.write(text)
@@ -51,8 +64,8 @@ def showlinks():
 
 def add(main):
     global nameobjectlist, linkobjectlist
-    nameobjectlist.append(Entrys("", len(nameobjectlist)+1, main, 0))
-    linkobjectlist.append(Entrys("", len(linkobjectlist)+1, main, 1))
+    nameobjectlist.append(Entrys("", len(nameobjectlist) + 1, main, 0))
+    linkobjectlist.append(Entrys("", len(linkobjectlist) + 1, main, 1))
 
 
 def edit():
@@ -66,12 +79,12 @@ def edit():
     global nameobjectlist
     nameobjectlist = []
     for i in range(0, len(names)):
-        nameobjectlist.append(Entrys(names[i], i+1, main, 0))
+        nameobjectlist.append(Entrys(names[i], i + 1, main, 0))
 
     global linkobjectlist
     linkobjectlist = []
     for i in range(0, len(names)):
-        linkobjectlist.append(Entrys(links[i], i+1, main, 1))
+        linkobjectlist.append(Entrys(links[i], i + 1, main, 1))
 
     style = ttk.Style()
     style.configure("TButton", font=("Arial", 11))
