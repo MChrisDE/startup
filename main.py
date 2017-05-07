@@ -16,9 +16,9 @@ def handle_url(url) -> str:
     return url
 
 
-def saveChanges(main):
+def save_changes(main):
     text = ""
-    global file_path, flow, nameobjectlist, linkobjectlist
+    global file_path, nameobjectlist, linkobjectlist
     for i in range(0, len(nameobjectlist)):
         if nameobjectlist[i].text.get() != '' and linkobjectlist[i].text.get() != '':
             text += nameobjectlist[i].text.get() + "~" + handle_url(linkobjectlist[i].text.get()) + "\n"
@@ -68,8 +68,8 @@ class MainWindow(Frame):
 
         ttk.Style().configure("TButton", font=("Arial", 11))
 
-        save_button = ttk.Button(t, text="Save", style="TButton", command=lambda: saveChanges(t))
-        save_button.bind("<Return>", lambda event: saveChanges(t))
+        save_button = ttk.Button(t, text="Save", style="TButton", command=lambda: save_changes(t))
+        save_button.bind("<Return>", lambda event: save_changes(t))
         save_button.grid(row=0, column=1, padx=0, pady=25)
         save_button.focus_set()
 
