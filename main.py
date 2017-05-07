@@ -16,7 +16,7 @@ def handle_url(url) -> str:
     return url
 
 
-def save_changes(main):
+def save_changes(t):
     text = ""
     global file_path, nameobjectlist, linkobjectlist
     for i in range(0, len(nameobjectlist)):
@@ -27,13 +27,14 @@ def save_changes(main):
     f.write(text)
     f.close()
 
-    main.destroy()
+    t.destroy()
+    main.init()
 
 
-def add(main):
+def add(t):
     global nameobjectlist, linkobjectlist
-    nameobjectlist.append(Entrys("", len(nameobjectlist) + 1, main, 0))
-    linkobjectlist.append(Entrys("", len(linkobjectlist) + 1, main, 1))
+    nameobjectlist.append(Entrys("", len(nameobjectlist) + 1, t, 0))
+    linkobjectlist.append(Entrys("", len(linkobjectlist) + 1, t, 1))
 
 
 # Thanks to: http://stackoverflow.com/a/15306785
@@ -42,6 +43,12 @@ class MainWindow(Frame):
 
     def __init__(self, *args, **kwargs):
         Frame.__init__(self, *args, **kwargs)
+        self.init()
+
+    def init(self):  # populate main window with buttons
+        for widget in self.winfo_children():  # clean up existing buttons
+            widget.destroy()
+
         names, links = getdata(file_path)
         # creating the buttons
         objectlist = []
@@ -49,7 +56,7 @@ class MainWindow(Frame):
             objectlist.append(Row(names[i], links[i], self, i))
 
     def edit(self):
-        # creating a main window
+        # creating the edit window
         names, links = getdata(file_path)
         t = Toplevel(self)
         t.wm_title("startup - edit")
