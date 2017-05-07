@@ -49,11 +49,15 @@ def showlinks():
     main = Tk()
     main.wm_title("startup")
     main.protocol("WM_DELETE_WINDOW", lambda: quiteverything(main))
+
     # creating a menubar
     menu = Menu(main)
-    menu.add_command(label="Edit", command=lambda: changeflow(main))
-    menu.add_command(label="Quit", command=lambda: quiteverything(main))
     main.config(menu=menu)
+    file_menu = Menu(menu, tearoff=0)
+    menu.add_cascade(label="File", menu=file_menu)
+    file_menu.add_command(label="Quit", command=lambda: quiteverything(main))
+    menu.add_command(label="Edit", command=lambda: changeflow(main))
+
     # creating the buttons
     objectlist = []
     for i in range(0, len(names)):
